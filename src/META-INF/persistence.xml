@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="projet-perso-1-bis">
+	
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<class>fr.nico.bol.Produit</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;DatabaseName=ProjetPerso1Bis"/>
+            <property name="javax.persistence.jdbc.user" value="nico"/>
+            <property name="javax.persistence.jdbc.password" value="nico"/>
+			<!-- <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projet_perso_1_bis?useSSL=false"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
+			<property name="javax.persistence.jdbc.password" value=""/> -->
+			<property name="javax.persistence.jdbc.logging.level" value="INFO"/>
+			
+			<property name="hibernate.archive.autodetection" value="class"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+			<property name="hibernate.hbm2ddl.auto" value="create"/>
+			<property name="hibernate.use_sql_comments" value="true"/>
+			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/> -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
+		</properties>
+
+	
+	</persistence-unit>
+</persistence>
