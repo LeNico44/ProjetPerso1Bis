@@ -1,6 +1,8 @@
 package fr.nico.bol;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,6 +23,8 @@ public abstract class Produit implements Serializable {
 	private Double poids;
 	@Enumerated( EnumType.STRING )
 	private Magasin magasin;
+	@Temporal(TemporalType.DATE)// avec DATE ou TIME ou DATE TIME permet de préciser le type enregistré
+	private Date dateMaj;
 
 	public Produit () {}
 	
@@ -72,6 +76,14 @@ public abstract class Produit implements Serializable {
 		this.magasin = magasin;
 	}
 	
+	public Date getDateMaj() {
+		return dateMaj;
+	}
+
+	public void setDateMaj(Date dateMaj) {
+		this.dateMaj = dateMaj;
+	}
+
 	public enum Magasin {
 		Leclerc, Chlorophylle, Lidl, HyperU;
 		
