@@ -22,7 +22,7 @@ public class ProduitManager {
 		this.produit = produit;
 	}
 	
-	public Produit creationProduit (String libelle, Magasin magasin, double poids, double prix, double prixKilo) {
+	public Produit creationProduit (String libelle, Magasin magasin, double poids, double prix, double prixKilo, double poidsStock, float quantiteStock) {
 		if (prixKilo == 0) {
 			produit = new ProduitEmballe();
 			produit.setLibelle(libelle);
@@ -48,6 +48,8 @@ public class ProduitManager {
 			produit.setPrixKilo(prixKilo);
 			produit.setPrix(null);
 			produit.setDateMaj(new Date());
+			produit.setPoidsStock(poidsStock);
+			produit.setQuantiteStock(quantiteStock);
 		}
 		return produit;
 		

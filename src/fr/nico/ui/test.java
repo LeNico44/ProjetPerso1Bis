@@ -2,21 +2,19 @@ package fr.nico.ui;
 
 import java.util.Scanner;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import fr.nico.bll.ProduitManager;
 import fr.nico.bol.Produit.Magasin;
+import fr.nico.dao.ProduitDAO;
 
 public class test {
 	
-	private static final String PERSISTENCE_UNIT = "projet-perso-1-bis";
 	private static final Scanner sc = new Scanner( System.in );
 	private static final Scanner sc2 = new Scanner( System.in );
 	private static final double doubleNull = 0;
 
 	public static void main(String[] args) {
+		
+		System.out.println("                        ici menu pour choisir   modifier le stock d'un produit                           ");
 		creationDunProduit();
 		
 
@@ -24,6 +22,8 @@ public class test {
 	private static void creationDunProduit() {
 		double poids;
 		double prix;
+		double poidsStock = 0;
+		float quantiteStock = 0;
 		System.out.println("Coucou !!!");
 		System.out.println("Bienvenue dans la création de produit !");
 		System.out.println("***************************************");
@@ -70,13 +70,13 @@ public class test {
 		
 		ProduitManager produitManager = new ProduitManager();
 		
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( PERSISTENCE_UNIT );
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(produitManager.creationProduit(libelle, magasin, poids, prix, prixKilo));
-		em.getTransaction().commit();
-		em.close();
-		emf.close();
+		ProduitDAO produitDao = new ProduitDAO();
+		
+		try {
+        	produitDao.create( produitManager.creationProduit(libelle, magasin, poids, prix, prixKilo, poidsStock, quantiteStock) );
+        } catch ( java.sql.SQLException e ) {
+            System.out.println( e.getMessage() );
+        }
 		
 		System.out.println("It's ok !");
 		System.out.println("Souhaitez-vous entrer un nouveau produit ?");
