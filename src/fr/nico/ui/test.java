@@ -1,5 +1,6 @@
 package fr.nico.ui;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import fr.nico.bll.ProduitManager;
@@ -12,18 +13,47 @@ public class test {
 	private static final Scanner sc2 = new Scanner( System.in );
 	private static final double doubleNull = 0;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		
-		System.out.println("                        ici menu pour choisir   modifier le stock d'un produit                           ");
-		creationDunProduit();
-		
+		System.out.println("Affichage du garde manger au démarrage de l'application. (permet en un coup d'oeil de voir ce que l'on a à dispo.)");
+		ProduitManager produitManager = new ProduitManager();
+		produitManager.showStockProduit();
+		menuPrincipal();
 
 	}
+	
+	private static void menuPrincipal() throws SQLException {
+		ProduitManager produitManager = new ProduitManager();
+		
+		System.out.println("************************************************************************");
+		System.out.println("**************************** Menu Principal ****************************");
+		System.out.println("** 1- Voir tous les produits enregistrés                              **");
+		System.out.println("** 2- Ajouter un produit en base                                      **");
+		System.out.println("** 3- Mettre à jour le stock                                          **");
+		
+		String choix = sc2.nextLine();
+		
+		switch (choix){
+		case "1" : 
+			produitManager.voirTousProduits();
+			menuPrincipal();
+			break;
+		case "2" : 
+			creationDunProduit();
+			menuPrincipal();
+			break;
+		case "3" : 
+			produitManager.majStock(produitManager.choixProduit(produitManager.voirTousProduits()));
+			menuPrincipal();
+			break;
+		}
+	}
+	
 	private static void creationDunProduit() {
 		double poids;
 		double prix;
 		double poidsStock = 0;
-		float quantiteStock = 0;
+		int quantiteStock = 0;
 		System.out.println("Coucou !!!");
 		System.out.println("Bienvenue dans la création de produit !");
 		System.out.println("***************************************");
@@ -79,20 +109,6 @@ public class test {
         }
 		
 		System.out.println("It's ok !");
-		System.out.println("Souhaitez-vous entrer un nouveau produit ?");
-		System.out.println("1 : oui ");
-		System.out.println("2 : non ");
-		int encore = sc.nextInt();
-		if(encore == 1) {
-			creationDunProduit();
-		}else if(encore == 2) {
-			System.out.println("bye !");
-		}else
-		{
-			System.out.println("Vous n'êtes pas capable de choisir entre 1 et 2 !");
-		}
-		
-		
 	}
 
 }

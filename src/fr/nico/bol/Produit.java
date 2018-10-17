@@ -25,7 +25,7 @@ public abstract class Produit implements Serializable {
 	private Magasin magasin;
 	@Temporal(TemporalType.DATE)// avec DATE ou TIME ou DATE TIME permet de préciser le type enregistré
 	private Date dateMaj;
-	private Float quantiteStock;
+	private int quantiteStock;
 	private Double poidsStock;
 
 	public Produit () {}
@@ -86,11 +86,11 @@ public abstract class Produit implements Serializable {
 		this.dateMaj = dateMaj;
 	}
 
-	public Float getQuantiteStock() {
+	public int getQuantiteStock() {
 		return quantiteStock;
 	}
 
-	public void setQuantiteStock(Float quantiteStock) {
+	public void setQuantiteStock(int quantiteStock) {
 		this.quantiteStock = quantiteStock;
 	}
 

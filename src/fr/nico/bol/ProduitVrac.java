@@ -12,6 +12,6 @@ public class ProduitVrac extends Produit {
 	private static final long serialVersionUID = 1L;
 
 	public ProduitVrac () {
-		
+		super();
 	}
 }

@@ -12,6 +12,6 @@ public class ProduitEmballe extends Produit {
 	private static final long serialVersionUID = 1L;
 
 	public ProduitEmballe () {
-		
+		super();
 	}
 }

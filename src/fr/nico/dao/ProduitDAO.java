@@ -1,8 +1,10 @@
 package fr.nico.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import fr.nico.bol.Produit;
 
@@ -14,6 +16,13 @@ public class ProduitDAO implements IDAO <Produit>{
 		begin();
 		em.persist(o);
 		commit();
+	}
+	
+	@Override
+	public List<Produit> read() throws SQLException {
+		TypedQuery<Produit> query = em.createQuery( "FROM Produit", Produit.class );
+		List<Produit> produits = query.getResultList();
+		return produits;
 	}
 
 	@Override
