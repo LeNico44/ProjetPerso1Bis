@@ -14,9 +14,7 @@ import fr.nico.bol.ProduitVrac;
 public class ProduitManager {
 	private Produit produit;
 	
-	public ProduitManager() {
-		
-	}
+	public ProduitManager() {}
 
 	public Produit getProduit() {
 		return produit;
@@ -70,7 +68,7 @@ public class ProduitManager {
 			
 			if ( !first ) {
 				System.out.println( "**********************************************************" );
-				System.out.println( "* Mauvais choix - agence inconnue; merci de recommencer ! *" );
+				System.out.println( "* Mauvais choix ! 										  *" );
 				System.out.println( "**********************************************************" );
 			}
 			produits.forEach( item->{
@@ -105,15 +103,52 @@ public class ProduitManager {
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner( System.in );
 		System.out.println( " " );
-		System.out.println( "Sélectionnez un produit pour modifier son stock." );
+		System.out.println( "Sélectionnez un produit." );
 		int response;
 		response = sc.nextInt();
 		produit = produits.get(response);
 		return produit;
 	}
 	
-	public void majStock(Produit produit) {
-		System.out.println( "Test récupération du produit !" );
-		System.out.println( produit.getLibelle());
+	public void majStock(Produit produit) throws SQLException {
+		//récupération des anciens stocks
+		int oldQuantite = produit.getQuantiteStock();
+		Double oldPoids = produit.getPoidsStock();
+		//procédures
+		@SuppressWarnings("resource")
+		Scanner sc = new Scanner( System.in );
+		ProduitDAO produitDao = new ProduitDAO();
+		if(oldQuantite == 0 && oldPoids != 0) {
+			System.out.println("Le produit '" + produit.getLibelle() + "' à un poids actuel de " + oldPoids + " Kg.");
+		}else if(oldQuantite != 0 && oldPoids == 0) {
+			System.out.println("Le produit '" + produit.getLibelle() + "' à une quantité actuelle de " + oldQuantite + ".");
+		}
+		
+		System.out.println("Favorisez les enregistrement de poids au maximum.");
+		System.out.println("Exemple : pour 1 paquet de riz d'1 kg, on enregistrera '1' en kg dans le stock plutôt qu'une quantité de '1'.");
+		System.out.println("!!! ATTENTION !!! La valeur non choisi passe automatiquement à zéro !");
+		System.out.println(" ");
+		System.out.println("Maintenant c'est à vous choisissez d'entrer la nouvelle valeur du stock en quantité ou en poids :");
+		System.out.println("1- poids");
+		System.out.println("2- quantité");
+		int choix = sc.nextInt();
+		
+		switch(choix) {
+			case 1 :
+				System.out.println( "Entrer ce qu'il reste de " + produit.getLibelle() + " en kilo." );
+				Double poids = sc.nextDouble();
+				produit.setQuantiteStock(0);
+				produit.setPoidsStock(poids);
+				break;
+			case 2 :
+				System.out.println( "Entrer combien de " + produit.getLibelle() + ", il reste." );
+				int quantite = sc.nextInt();
+				produit.setPoidsStock(0.0);
+				produit.setQuantiteStock(quantite);
+				break;
+		}
+		// retour de mise à jour
+		produitDao.update(produit);
+		showStockProduit();
 	}
 }

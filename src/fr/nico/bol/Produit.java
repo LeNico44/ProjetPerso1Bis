@@ -1,7 +1,11 @@
+//https://vladmihalcea.com/the-best-way-to-map-a-many-to-many-association-with-extra-columns-when-using-jpa-and-hibernate/
+
 package fr.nico.bol;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -16,7 +20,7 @@ public abstract class Produit implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private Long id;
+	private Long produit_id;
 	private String libelle;
 	private Double prix;
 	private Double prixKilo;
@@ -27,15 +31,18 @@ public abstract class Produit implements Serializable {
 	private Date dateMaj;
 	private int quantiteStock;
 	private Double poidsStock;
+	
+	@ManyToMany(mappedBy = "produits")
+    private Set<Recette> recettes = new HashSet<>();
 
 	public Produit () {}
 	
-	public Long getId() {
-		return id;
+	public Long getProduit_id() {
+		return produit_id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setProduit_id(Long id) {
+		this.produit_id = id;
 	}
 
 	public String getLibelle() {

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import fr.nico.bll.ProduitManager;
+import fr.nico.bll.RecetteManager;
 import fr.nico.bol.Produit.Magasin;
 import fr.nico.dao.ProduitDAO;
 
@@ -24,12 +25,15 @@ public class test {
 	
 	private static void menuPrincipal() throws SQLException {
 		ProduitManager produitManager = new ProduitManager();
+		RecetteManager recetteManager = new RecetteManager();
 		
 		System.out.println("************************************************************************");
 		System.out.println("**************************** Menu Principal ****************************");
 		System.out.println("** 1- Voir tous les produits enregistrés                              **");
 		System.out.println("** 2- Ajouter un produit en base                                      **");
 		System.out.println("** 3- Mettre à jour le stock                                          **");
+		System.out.println("** 4- Liste des recettes                                              **");
+		System.out.println("** 5- Enregistrer une recette                                         **");
 		
 		String choix = sc2.nextLine();
 		
@@ -44,6 +48,14 @@ public class test {
 			break;
 		case "3" : 
 			produitManager.majStock(produitManager.choixProduit(produitManager.voirTousProduits()));
+			menuPrincipal();
+			break;
+		case "4" : 
+			recetteManager.listeRecettes();
+			menuPrincipal();
+			break;
+		case "5" : 
+			recetteManager.creationRecette();
 			menuPrincipal();
 			break;
 		}

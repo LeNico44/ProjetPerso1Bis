@@ -6,34 +6,35 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import fr.nico.bol.Produit;
+import fr.nico.bol.Recette;
 
-public class ProduitDAO implements IDAO <Produit>{
+public class RecetteDAO implements IDAO <Recette>{
 	private static EntityManager em = JPAConnectionManager.getEm();
 
 	@Override
-	public void create(Produit o) throws SQLException {
+	public void create(Recette o) throws SQLException {
 		begin();
 		em.persist(o);
 		commit();
 	}
-	
+
 	@Override
-	public List<Produit> read() throws SQLException {
-		TypedQuery<Produit> query = em.createQuery( "FROM Produit", Produit.class );
-		List<Produit> produits = query.getResultList();
-		return produits;
+	public List<Recette> read() throws SQLException {
+		TypedQuery<Recette> query = em.createQuery( "FROM Recette", Recette.class );
+		List<Recette> recettes = query.getResultList();
+		return recettes;
 	}
 
 	@Override
-	public void update(Produit o) throws SQLException {
+	public void update(Recette o) throws SQLException {
 		begin();
 		em.merge(o);
-		commit();	
+		commit();
+		
 	}
 
 	@Override
-	public void delete(Produit o) throws SQLException {
+	public void delete(Recette o) throws SQLException {
 		begin();
 		em.remove(em.contains(o) ? o : em.merge(o));
 		commit();
@@ -49,8 +50,9 @@ public class ProduitDAO implements IDAO <Produit>{
 	
 	public void commit() {
 		em.getTransaction().commit();
-		/*em.close();
-		JPAConnectionManager.closeEmf();*/
+		em.close();
+		JPAConnectionManager.closeEmf();
 	}
+
 
 }
