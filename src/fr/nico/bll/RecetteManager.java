@@ -1,6 +1,7 @@
 package fr.nico.bll;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
@@ -37,18 +38,22 @@ public class RecetteManager {
 		recette.setTitre(titre);
 		recette.setDescription(description);
 		ProduitManager produitManager = new ProduitManager();
-		Set<RecetteProduit> recettesProduits = new HashSet<>();
+		RecetteProduitManager recetteProduitManager = new RecetteProduitManager();
+		RecetteProduit recetteProduit = new RecetteProduit();
+		Set<RecetteProduit> recetteProduits = new HashSet<RecetteProduit>();
+		Set<Produit> produits = new HashSet<>();
 		
 		int reponse = 1;
 		do {
 			System.out.println("Sélectionner un produit dans la liste pour votre recette.");
-			recettesProduits.add(produitManager.choixProduit(produitManager.voirTousProduits()));
+			produits.add(produitManager.choixProduit(produitManager.voirTousProduits()));
+			recetteProduit.setProduit(produitManager.choixProduit(produitManager.voirTousProduits()));
+			recetteProduits.add(recetteProduit);
 			//Affichages des produits déjà dans la recette.
 			System.out.println(" ");
 			System.out.println("***** Liste des ingrédients de la recette *****");
-			for (RecetteProduit recetteProduit : recettesProduits) {
-				System.out.println(recetteProduit.getProduit().getLibelle());
-				//System.out.println("- " + produit.getLibelle());
+			for (Produit produit : produits) {
+				System.out.println("- " + produit.getLibelle());
 			}
 			System.out.println(" ");
 			//FIN Affichages des produits déjà dans la recette.
@@ -59,14 +64,15 @@ public class RecetteManager {
 		}while(reponse != 2);
 			
 		
+		//produits
 		
-		recette.setRecettesProduits(recettesProduits);
+		recette.setRecettesProduits(recetteProduits);
 		
 		
 		recetteDao.create(recette);
 	}
 	
-	public void listeRecettes() throws SQLException {
+	public List<Recette> listeRecettes() throws SQLException {
 		RecetteDAO recetteDao = new RecetteDAO();
 		List<Recette> recettes = recetteDao.read();
 		if(recettes != null && recettes.size() > 0) {
@@ -80,6 +86,19 @@ public class RecetteManager {
 			}
 		}
 		
+		return recettes;
+		
+	}
+	
+	public Recette choixRecette(List<Recette> recettes) throws SQLException {
+		@SuppressWarnings("resource")
+		Scanner sc = new Scanner( System.in );
+		System.out.println( " " );
+		System.out.println( "Sélectionnez une recette." );
+		int response;
+		response = sc.nextInt();
+		recette = recettes.get(response);
+		return recette;
 	}
 	
 	

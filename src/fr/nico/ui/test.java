@@ -25,6 +25,7 @@ public class test {
 	private static void menuPrincipal() throws SQLException {
 		ProduitManager produitManager = new ProduitManager();
 		RecetteManager recetteManager = new RecetteManager();
+		RecetteProduitManager recetteProduitManager = new RecetteProduitManager();
 		
 		System.out.println("************************************************************************");
 		System.out.println("**************************** Menu Principal ****************************");
@@ -47,6 +48,7 @@ public class test {
 			break;
 		case "3" : 
 			//produitManager.majStock(produitManager.choixProduit(produitManager.voirTousProduits()));
+			recetteProduitManager.listProduit(recetteManager.choixRecette(recetteManager.listeRecettes()));
 			menuPrincipal();
 			break;
 		case "4" : 

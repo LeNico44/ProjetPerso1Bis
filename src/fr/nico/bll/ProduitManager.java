@@ -102,14 +102,14 @@ public class ProduitManager {
 		return produits;
 	}
 	
-	public Produit choixProduit(Set<RecetteProduit> recettesProduits) throws SQLException {
+	public Produit choixProduit(List<Produit> produits) throws SQLException {
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner( System.in );
 		System.out.println( " " );
 		System.out.println( "Sélectionnez un produit." );
 		int response;
 		response = sc.nextInt();
-		produit = produits.iterator().equals(produits).;
+		produit = produits.get(response);
 		return produit;
 	}
 	
