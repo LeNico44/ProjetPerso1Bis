@@ -1,20 +1,13 @@
 package fr.nico.bol;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table( name = "recette" )
@@ -32,13 +25,13 @@ public class Recette implements Serializable {
 	private String description;
 	
 	
-	@ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-        name = "Recette_Produit", 
-        joinColumns = { @JoinColumn(name = "recette_id") }, 
-        inverseJoinColumns = { @JoinColumn(name = "produit_id") }
-    )
-    Set<Produit> produits = new HashSet<>();
+	@OneToMany(
+		mappedBy = "recette",
+		cascade = { CascadeType.ALL },
+		orphanRemoval = true
+	)
+    
+	private Set<RecetteProduit> recettesProduits = new HashSet<>();
 	
 	public Recette() {}
 
@@ -74,11 +67,27 @@ public class Recette implements Serializable {
 		this.description = description;
 	}
 
-	public Set<Produit> getProduits() {
-		return produits;
+	public Set<RecetteProduit> getRecettesProduits() {
+		return recettesProduits;
 	}
 
-	public void setProduits(Set<Produit> produits) {
-		this.produits = produits;
+	public void setRecettesProduits(Set<RecetteProduit> recettesProduits) {
+		this.recettesProduits = recettesProduits;
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+ 
+        if (o == null || getClass() != o.getClass()) 
+            return false;
+ 
+        Recette recette = (Recette) o;
+        return Objects.equals(titre, recette.titre);
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(titre);
+    }
 }

@@ -7,6 +7,8 @@
 		<class>fr.nico.bol.ProduitVrac</class>
 		<class>fr.nico.bol.ProduitEmballe</class>
 		<class>fr.nico.bol.Recette</class>
+		<class>fr.nico.bol.RecetteProduit</class>
+		<class>fr.nico.bol.RecetteProduit.RecetteProduitId</class>
 		<properties>
 			<!-- <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;DatabaseName=ProjetPerso1Bis"/>

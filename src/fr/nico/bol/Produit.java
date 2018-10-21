@@ -3,8 +3,11 @@
 package fr.nico.bol;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -32,8 +35,12 @@ public abstract class Produit implements Serializable {
 	private int quantiteStock;
 	private Double poidsStock;
 	
-	@ManyToMany(mappedBy = "produits")
-    private Set<Recette> recettes = new HashSet<>();
+	@OneToMany(
+	        mappedBy = "produit",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+    private Set<RecetteProduit> recettesProduits = new HashSet<>();
 
 	public Produit () {}
 	
@@ -109,9 +116,34 @@ public abstract class Produit implements Serializable {
 		this.poidsStock = poidsStock;
 	}
 
+	public Set<RecetteProduit> getRecettesProduits() {
+		return recettesProduits;
+	}
+
+	public void setRecettesProduits(Set<RecetteProduit> recettesProduits) {
+		this.recettesProduits = recettesProduits;
+	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+ 
+        if (o == null || getClass() != o.getClass()) 
+            return false;
+ 
+        Produit produit = (Produit) o;
+        return Objects.equals(libelle, produit.libelle);
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(libelle);
+    }
+
 	public enum Magasin {
 		Leclerc, Chlorophylle, Lidl, HyperU;
 		
 		private Magasin() {}
 	}
+	
 }

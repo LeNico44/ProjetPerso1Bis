@@ -8,6 +8,7 @@ import java.util.Set;
 
 import fr.nico.bol.Produit;
 import fr.nico.bol.Recette;
+import fr.nico.bol.RecetteProduit;
 import fr.nico.dao.RecetteDAO;
 
 public class RecetteManager {
@@ -36,17 +37,18 @@ public class RecetteManager {
 		recette.setTitre(titre);
 		recette.setDescription(description);
 		ProduitManager produitManager = new ProduitManager();
-		Set<Produit> produits = new HashSet<>();
+		Set<RecetteProduit> recettesProduits = new HashSet<>();
 		
 		int reponse = 1;
 		do {
 			System.out.println("Sélectionner un produit dans la liste pour votre recette.");
-			produits.add(produitManager.choixProduit(produitManager.voirTousProduits()));
+			recettesProduits.add(produitManager.choixProduit(produitManager.voirTousProduits()));
 			//Affichages des produits déjà dans la recette.
 			System.out.println(" ");
 			System.out.println("***** Liste des ingrédients de la recette *****");
-			for (Produit produit : produits) {
-				System.out.println("- " + produit.getLibelle());
+			for (RecetteProduit recetteProduit : recettesProduits) {
+				System.out.println(recetteProduit.getProduit().getLibelle());
+				//System.out.println("- " + produit.getLibelle());
 			}
 			System.out.println(" ");
 			//FIN Affichages des produits déjà dans la recette.
@@ -58,7 +60,7 @@ public class RecetteManager {
 			
 		
 		
-		recette.setProduits(produits);
+		recette.setRecettesProduits(recettesProduits);
 		
 		
 		recetteDao.create(recette);
@@ -74,7 +76,7 @@ public class RecetteManager {
 			
 			int index = 0;
 			for (Recette recette : recettes) {
-				System.out.println(index++ + "- " + recette.getTitre());
+				System.out.println(index++ + "- " + recette.getTitre() + " /?/ " + recette.getRecettesProduits().iterator().toString());
 			}
 		}
 		

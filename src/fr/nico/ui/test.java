@@ -3,8 +3,7 @@ package fr.nico.ui;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import fr.nico.bll.ProduitManager;
-import fr.nico.bll.RecetteManager;
+import fr.nico.bll.*;
 import fr.nico.bol.Produit.Magasin;
 import fr.nico.dao.ProduitDAO;
 
@@ -47,7 +46,7 @@ public class test {
 			menuPrincipal();
 			break;
 		case "3" : 
-			produitManager.majStock(produitManager.choixProduit(produitManager.voirTousProduits()));
+			//produitManager.majStock(produitManager.choixProduit(produitManager.voirTousProduits()));
 			menuPrincipal();
 			break;
 		case "4" : 

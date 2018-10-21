@@ -4,12 +4,14 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import fr.nico.bol.Produit;
 import fr.nico.bol.Produit.Magasin;
 import fr.nico.dao.ProduitDAO;
 import fr.nico.bol.ProduitEmballe;
 import fr.nico.bol.ProduitVrac;
+import fr.nico.bol.RecetteProduit;
 
 public class ProduitManager {
 	private Produit produit;
@@ -73,12 +75,13 @@ public class ProduitManager {
 			}
 			produits.forEach( item->{
 				if(item.getPoidsStock() != 0 || item.getQuantiteStock() != 0){
-					System.out.println(item.getLibelle() + " / " + item.getPoidsStock()  + " / " + item.getQuantiteStock());
+					System.out.println(item.getLibelle() + " / " + item.getPoidsStock()  + " / " + item.getQuantiteStock() + " ///// " + item.getRecettesProduits().size());
 				}
 			});
 			first = false;
 		}
 	}
+	
 		
 	public List<Produit> voirTousProduits() throws SQLException {
 		ProduitDAO produitDao = new ProduitDAO();
@@ -99,14 +102,14 @@ public class ProduitManager {
 		return produits;
 	}
 	
-	public Produit choixProduit(List<Produit> produits) throws SQLException {
+	public Produit choixProduit(Set<RecetteProduit> recettesProduits) throws SQLException {
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner( System.in );
 		System.out.println( " " );
 		System.out.println( "Sélectionnez un produit." );
 		int response;
 		response = sc.nextInt();
-		produit = produits.get(response);
+		produit = produits.iterator().equals(produits).;
 		return produit;
 	}
 	
