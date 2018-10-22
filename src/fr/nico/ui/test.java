@@ -26,6 +26,7 @@ public class test {
 	private static void menuPrincipal() throws SQLException {
 		ProduitManager produitManager = new ProduitManager();
 		RecetteManager recetteManager = new RecetteManager();
+		MenuManager menuManager = new MenuManager();
 		
 		System.out.println("************************************************************************");
 		System.out.println("**************************** Menu Principal ****************************");
@@ -56,6 +57,10 @@ public class test {
 			break;
 		case "5" : 
 			recetteManager.creationRecette();
+			menuPrincipal();
+			break;
+		case "6" :
+			menuManager.creationMenu();
 			menuPrincipal();
 			break;
 		}
