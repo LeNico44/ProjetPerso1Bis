@@ -29,10 +29,12 @@ public class MenuManager {
 	public void creationMenu() {
 		Menu menu = new Menu();
 		Date dateDebut = null;
+		Date dateFin = null;
 		Recette recette = null;
 		SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
 		RecetteManager recetteManager = new RecetteManager();
 		
+		//date de débuut
 		System.out.println("Votre menu commence le : ");
 		System.out.println("exemple : 22/05/2018");
 		String str = sc.nextLine();
@@ -42,23 +44,24 @@ public class MenuManager {
 			
 			sdf = new SimpleDateFormat("EEE, d MMM yyyy");
 			System.out.println("Date de début : " + sdf.format(dateDebut));
-			menu.setDateDebut(dateDebut);
 		} catch (ParseException e) {
 			System.out.println("Parse Exception !!! " + e.getMessage());
 		}
 		
-		/*System.out.println("Votre menu se termine le : ");
+		//Date de fin
+		System.out.println("Votre menu se termine le : ");
 		System.out.println("exemple : 22/05/2018");
-		str = sc.nextLine();
+		String str2 = sc.nextLine();
 		
 		try {
-			Date dateFin = sdf.parse(str);
+			sdf = new SimpleDateFormat ("dd/MM/yyyy");
+			dateFin = sdf.parse(str2);
 			
 			sdf = new SimpleDateFormat("EEE, d MMM yyyy");
 			System.out.println("Date de fin : " + sdf.format(dateFin));
 		} catch (ParseException e) {
 			System.out.println("Parse Exception !!! " + e.getMessage());
-		}*/
+		}
 		
 		System.out.println("Combien de personne mangeront sur ce menu ?");
 		int nbPersonne = sc.nextInt();
@@ -67,7 +70,6 @@ public class MenuManager {
 		try {
 			recette = recetteManager.choixRecette(recetteManager.listeRecettes());
 			System.out.println("Test de renvoi de données " + recette.getTitre());
-			menu.setRecette(recette);
 			
 		} catch (SQLException e) {
 			System.out.println("C'est la que ça merde !!!");
@@ -77,17 +79,17 @@ public class MenuManager {
 		}
 		
 		try {
-			
+			menu.setDateDebut(dateDebut);
+			menu.setDateFin(dateFin);
 			menu.setNbPersonne(nbPersonne);
-			
+			menu.setRecette(recette);
 
 		}catch(NullPointerException e) {
 			System.out.println("C'est le settage ! " + e.getMessage());
 		}
 		
 		
-		
-		System.out.println("Menu du " + menu.getDateDebut() + " pour " + menu.getNbPersonne() + " personnes possède la recette : '" + menu.getRecette().getTitre() + "'.");
+		System.out.println("Menu du " + sdf.format(menu.getDateDebut()) + " au " + sdf.format(menu.getDateFin()) + " pour " + menu.getNbPersonne() + " personnes possède la recette : '" + menu.getRecette().getTitre() + "'.");
 		
 		
 	}

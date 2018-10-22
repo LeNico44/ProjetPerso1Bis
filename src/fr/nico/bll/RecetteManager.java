@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
+import fr.nico.bol.Produit;
 import fr.nico.bol.Recette;
 import fr.nico.bol.RecetteProduit;
 import fr.nico.dao.RecetteDAO;
@@ -103,6 +104,15 @@ public class RecetteManager {
 		recette = recettes.get(response);
 		return recette;
 	}
+	
+	public Double prixRecette(Recette recette) {
+    	Double prixCalcule = 0.0;
+    	for (RecetteProduit rp: recette.getRecettesProduits()) {
+			prixCalcule = prixCalcule + (rp.getQuantiteKilo() * rp.getProduit().getPrixKilo());
+		}
+    	System.out.println(prixCalcule);
+    	return prixCalcule;
+    }
 	
 	
 }

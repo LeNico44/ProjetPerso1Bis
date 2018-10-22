@@ -112,4 +112,5 @@ public class Recette implements Serializable {
     public int hashCode() {
         return Objects.hash(titre);
     }
+    
 }

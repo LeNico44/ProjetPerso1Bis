@@ -35,6 +35,8 @@ public class test {
 		System.out.println("** 3- Mettre à jour le stock                                          **");
 		System.out.println("** 4- Liste des recettes                                              **");
 		System.out.println("** 5- Enregistrer une recette                                         **");
+		System.out.println("** 6- Créer un menu (une seule recette pour le moment !!!)            **");
+		System.out.println("** 7- Calculer le coût d'une recette                                  **");
 		
 		String choix = sc2.nextLine();
 		
@@ -61,6 +63,10 @@ public class test {
 			break;
 		case "6" :
 			menuManager.creationMenu();
+			menuPrincipal();
+			break;
+		case "7" :
+			recetteManager.prixRecette(recetteManager.choixRecette(recetteManager.listeRecettes()));
 			menuPrincipal();
 			break;
 		}
