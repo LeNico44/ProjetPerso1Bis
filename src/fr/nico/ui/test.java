@@ -1,6 +1,7 @@
 package fr.nico.ui;
 
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Scanner;
 
 import fr.nico.bll.*;
@@ -9,8 +10,8 @@ import fr.nico.dao.ProduitDAO;
 
 public class test {
 	
-	private static final Scanner sc = new Scanner( System.in );
-	private static final Scanner sc2 = new Scanner( System.in );
+	private static final Scanner sc = new Scanner( System.in ).useLocale(Locale.US);
+	private static final Scanner sc2 = new Scanner( System.in ).useLocale(Locale.US);
 	private static final double doubleNull = 0;
 
 	public static void main(String[] args) throws SQLException {
@@ -25,7 +26,6 @@ public class test {
 	private static void menuPrincipal() throws SQLException {
 		ProduitManager produitManager = new ProduitManager();
 		RecetteManager recetteManager = new RecetteManager();
-		RecetteProduitManager recetteProduitManager = new RecetteProduitManager();
 		
 		System.out.println("************************************************************************");
 		System.out.println("**************************** Menu Principal ****************************");
@@ -47,8 +47,7 @@ public class test {
 			menuPrincipal();
 			break;
 		case "3" : 
-			//produitManager.majStock(produitManager.choixProduit(produitManager.voirTousProduits()));
-			recetteProduitManager.listProduit(recetteManager.choixRecette(recetteManager.listeRecettes()));
+			produitManager.majStock(produitManager.choixProduit(produitManager.voirTousProduits()));
 			menuPrincipal();
 			break;
 		case "4" : 

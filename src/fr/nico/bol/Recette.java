@@ -1,9 +1,8 @@
 package fr.nico.bol;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -74,6 +73,29 @@ public class Recette implements Serializable {
 	public void setRecettesProduits(Set<RecetteProduit> recettesProduits) {
 		this.recettesProduits = recettesProduits;
 	}
+	
+	//méthode add du tuto pour la table de jointure avec colonne supplémentaire
+	public void addProduit(Produit produit, Double quantiteKilo) {
+		RecetteProduit recetteProduit = new RecetteProduit(this, produit, quantiteKilo);
+		recettesProduits.add(recetteProduit);
+		produit.getRecettesProduits().add(recetteProduit);
+	}
+	
+	//méthode remove du tuto pour la table de jointure avec colonne supplémentaire
+	public void removeProduit(Produit produit) {
+        for (Iterator<RecetteProduit> iterator = recettesProduits.iterator(); 
+             iterator.hasNext(); ) {
+        	RecetteProduit recetteProduit = iterator.next();
+ 
+            if (recetteProduit.getRecette().equals(this) &&
+            		recetteProduit.getProduit().equals(produit)) {
+                iterator.remove();
+                recetteProduit.getProduit().getRecettesProduits().remove(recetteProduit);
+                recetteProduit.setRecette(null);
+                recetteProduit.setProduit(null);
+            }
+        }
+    }
 	
 	@Override
     public boolean equals(Object o) {

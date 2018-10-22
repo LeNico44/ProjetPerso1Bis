@@ -80,9 +80,10 @@ public class RecetteProduit {
 	
 	public RecetteProduit() {}
 	
-	public RecetteProduit(Recette recette, Produit produit) {
+	public RecetteProduit(Recette recette, Produit produit, Double quantiteKilo) {
 		this.recette = recette;
 		this.produit = produit;
+		this.quantiteKilo = quantiteKilo;
 		this.id = new RecetteProduitId(recette.getRecette_id(), produit.getProduit_id());
 	}
 

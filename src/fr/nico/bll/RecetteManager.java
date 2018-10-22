@@ -1,13 +1,10 @@
 package fr.nico.bll;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
-import java.util.Set;
 
-import fr.nico.bol.Produit;
 import fr.nico.bol.Recette;
 import fr.nico.bol.RecetteProduit;
 import fr.nico.dao.RecetteDAO;
@@ -27,34 +24,46 @@ public class RecetteManager {
 	
 	public void creationRecette() throws SQLException {
 		@SuppressWarnings("resource")
-		Scanner sc = new Scanner( System.in );
+		Scanner sc = new Scanner( System.in ).useLocale(Locale.US);
+		@SuppressWarnings("resource")
+		Scanner sc2 = new Scanner( System.in ).useLocale(Locale.US);
 		RecetteDAO recetteDao = new RecetteDAO();
+		
 		System.out.println("Merci de donner un nom à votre recette.");
 		String titre = sc.nextLine();
+		
+		System.out.println("Merci d'indiquer pour combien de personne est prévu cette recette.");
+		int nbPersonne = sc2.nextInt();
+		
 		System.out.println("Merci de donner une petite description.");
 		System.out.println("! Ne pas passer à la ligne ! la touche enter arrête la saisie.");
 		String description = sc.nextLine();
+		
 		Recette recette = new Recette();
 		recette.setTitre(titre);
+		recette.setNbPersonne(nbPersonne);
 		recette.setDescription(description);
+		
 		ProduitManager produitManager = new ProduitManager();
-		RecetteProduitManager recetteProduitManager = new RecetteProduitManager();
 		RecetteProduit recetteProduit = new RecetteProduit();
-		Set<RecetteProduit> recetteProduits = new HashSet<RecetteProduit>();
-		Set<Produit> produits = new HashSet<>();
 		
 		int reponse = 1;
 		do {
 			System.out.println("Sélectionner un produit dans la liste pour votre recette.");
-			produits.add(produitManager.choixProduit(produitManager.voirTousProduits()));
 			recetteProduit.setProduit(produitManager.choixProduit(produitManager.voirTousProduits()));
-			recetteProduits.add(recetteProduit);
+			System.out.println("Pour combien souhaitez-vous " + recetteProduit.getProduit().getLibelle() + " ?");
+			Double quantiteKilo = sc.nextDouble();
+//			recetteProduit.setQuantiteKilo(quantiteKilo);
+//			recetteProduits.add(recetteProduit);
+			recette.addProduit(recetteProduit.getProduit(), quantiteKilo);
+			
 			//Affichages des produits déjà dans la recette.
 			System.out.println(" ");
 			System.out.println("***** Liste des ingrédients de la recette *****");
-			for (Produit produit : produits) {
-				System.out.println("- " + produit.getLibelle());
+			for (RecetteProduit rp: recette.getRecettesProduits()) {
+				System.out.println("- "+ rp.getQuantiteKilo() + " kg de " + rp.getProduit().getLibelle());
 			}
+			
 			System.out.println(" ");
 			//FIN Affichages des produits déjà dans la recette.
 			System.out.println("Souhaitez-vous ajouter un autre ingredient à votre recette ?");
@@ -62,12 +71,6 @@ public class RecetteManager {
 			reponse = sc.nextInt();
 			System.out.println(reponse);
 		}while(reponse != 2);
-			
-		
-		//produits
-		
-		recette.setRecettesProduits(recetteProduits);
-		
 		
 		recetteDao.create(recette);
 	}
@@ -82,7 +85,7 @@ public class RecetteManager {
 			
 			int index = 0;
 			for (Recette recette : recettes) {
-				System.out.println(index++ + "- " + recette.getTitre() + " /?/ " + recette.getRecettesProduits().iterator().toString());
+				System.out.println(index++ + "- " + recette.getTitre());
 			}
 		}
 		
@@ -92,7 +95,7 @@ public class RecetteManager {
 	
 	public Recette choixRecette(List<Recette> recettes) throws SQLException {
 		@SuppressWarnings("resource")
-		Scanner sc = new Scanner( System.in );
+		Scanner sc = new Scanner( System.in ).useLocale(Locale.US);
 		System.out.println( " " );
 		System.out.println( "Sélectionnez une recette." );
 		int response;

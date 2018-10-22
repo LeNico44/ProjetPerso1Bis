@@ -3,15 +3,14 @@ package fr.nico.bll;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
-import java.util.Set;
 
 import fr.nico.bol.Produit;
 import fr.nico.bol.Produit.Magasin;
 import fr.nico.dao.ProduitDAO;
 import fr.nico.bol.ProduitEmballe;
 import fr.nico.bol.ProduitVrac;
-import fr.nico.bol.RecetteProduit;
 
 public class ProduitManager {
 	private Produit produit;
@@ -75,7 +74,7 @@ public class ProduitManager {
 			}
 			produits.forEach( item->{
 				if(item.getPoidsStock() != 0 || item.getQuantiteStock() != 0){
-					System.out.println(item.getLibelle() + " / " + item.getPoidsStock()  + " / " + item.getQuantiteStock() + " ///// " + item.getRecettesProduits().size());
+					System.out.println(item.getLibelle() + " / " + item.getPoidsStock()  + " / " + item.getQuantiteStock());
 				}
 			});
 			first = false;
@@ -104,7 +103,7 @@ public class ProduitManager {
 	
 	public Produit choixProduit(List<Produit> produits) throws SQLException {
 		@SuppressWarnings("resource")
-		Scanner sc = new Scanner( System.in );
+		Scanner sc = new Scanner( System.in ).useLocale(Locale.US);
 		System.out.println( " " );
 		System.out.println( "Sélectionnez un produit." );
 		int response;
@@ -119,7 +118,7 @@ public class ProduitManager {
 		Double oldPoids = produit.getPoidsStock();
 		//procédures
 		@SuppressWarnings("resource")
-		Scanner sc = new Scanner( System.in );
+		Scanner sc = new Scanner( System.in ).useLocale(Locale.US);
 		ProduitDAO produitDao = new ProduitDAO();
 		if(oldQuantite == 0 && oldPoids != 0) {
 			System.out.println("Le produit '" + produit.getLibelle() + "' à un poids actuel de " + oldPoids + " Kg.");
