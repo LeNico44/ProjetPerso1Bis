@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-import fr.nico.bol.Produit;
 import fr.nico.bol.Recette;
 import fr.nico.bol.RecetteProduit;
 import fr.nico.dao.RecetteDAO;

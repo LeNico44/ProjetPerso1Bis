@@ -2,10 +2,11 @@ package fr.nico.bol;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name ="Menu")
 @Table(name = "menu")
 public class Menu implements Serializable{
 
@@ -19,8 +20,17 @@ public class Menu implements Serializable{
 	private Date dateDebut;
 	private Date dateFin;
 	private int nbPersonne;
-	//à remplacer par une liste de recette par exemple.
-	private Recette recette;
+	private Double prixMenu;
+
+	@ManyToMany(cascade = { 
+        CascadeType.PERSIST, 
+        CascadeType.MERGE
+    })
+    @JoinTable(name = "menu_recette",
+        joinColumns = @JoinColumn(name = "menu_id"),
+        inverseJoinColumns = @JoinColumn(name = "recette_id")
+    )
+	private List<Recette> recettes;
 	
 	public Menu() {}
 
@@ -56,11 +66,19 @@ public class Menu implements Serializable{
 		this.nbPersonne = nbPersonne;
 	}
 
-	public Recette getRecette() {
-		return recette;
+	public List<Recette> getRecettes() {
+		return recettes;
 	}
 
-	public void setRecette(Recette recette) {
-		this.recette = recette;
+	public void setRecettes(List<Recette> recettes) {
+		this.recettes = recettes;
+	}
+
+	public Double getPrixMenu() {
+		return prixMenu;
+	}
+
+	public void setPrixMenu(Double prixMenu) {
+		this.prixMenu = prixMenu;
 	}
 }

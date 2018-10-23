@@ -1,14 +1,16 @@
 package fr.nico.bol;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Recette")
 @Table( name = "recette" )
 @Inheritance( strategy = InheritanceType.SINGLE_TABLE )//strategy d'heritage
 public class Recette implements Serializable {
@@ -22,7 +24,8 @@ public class Recette implements Serializable {
 	private String titre;
 	private int nbPersonne;
 	private String description;
-	
+	@ManyToMany(mappedBy = "recettes")
+    private List<Menu> menus = new ArrayList<>();
 	
 	@OneToMany(
 		mappedBy = "recette",
